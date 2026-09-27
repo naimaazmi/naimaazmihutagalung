@@ -220,7 +220,7 @@ st.markdown("""
         backdrop-filter: blur(8px);
         border: 2px solid #f48fb1;
         border-radius: 24px;
-        padding: 24px 20px;
+        padding: 24px 30px;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -228,16 +228,7 @@ st.markdown("""
         gap: 15px;
         box-shadow: 0 10px 25px rgba(233, 30, 99, 0.08);
         margin-bottom: 25px;
-        text-align: center !important;
-        width: 100%;
-    }
-
-    .hero-banner > div {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
+        text-align: center;
     }
 
     .hero-icon {
@@ -250,21 +241,17 @@ st.markdown("""
         font-size: 2.5rem;
         font-weight: bold;
         color: #880e4f;
-        line-height: 1.2;
-        margin: 0 auto 10px auto;
-        text-align: center !important;
-        width: 100% !important;
-        text-wrap: balance; /* Memastikan pemotongan teks seimbang kanan-kiri */
-        display: block;
+        line-height: 1.15;
+        margin: 0 0 8px 0;
+        text-align: center;
     }
 
     .main-desc {
         font-size: 1.05rem;
         line-height: 1.55;
         color: #5c3543;
-        margin: 0 auto;
-        text-align: center !important;
-        width: 100%;
+        margin: 0;
+        text-align: center;
     }
 
     .tag-wrapper {
@@ -273,7 +260,6 @@ st.markdown("""
         justify-content: center;
         gap: 8px;
         margin-top: 14px;
-        width: 100%;
     }
 
     .tag-item {
@@ -435,10 +421,10 @@ st.markdown("""
         text-align: center;
     }
 
-    /* 2. PENYESUAIAN KHUSUS HP (< 768px) */
+    /* 2. PENYESUAIAN TAMPILAN HP (< 768px) */
     @media (max-width: 768px) {
         .block-container {
-            padding-top: 3rem !important;
+            padding-top: 3rem !important; /* Jarak aman dari header di HP */
         }
 
         .main-wrapper {
@@ -453,7 +439,7 @@ st.markdown("""
         }
 
         .hero-banner {
-            padding: 16px 12px;
+            padding: 16px;
             gap: 12px;
             border-radius: 16px;
         }
@@ -464,18 +450,13 @@ st.markdown("""
         }
 
         .main-title {
-            font-size: 1.45rem !important;
-            line-height: 1.3 !important;
-            margin: 0 auto 6px auto !important;
-            text-align: center !important;
-            width: 100% !important;
-            text-wrap: balance !important; /* Menjamin judul rata tengah seimbang di HP */
+            font-size: 1.55rem !important;
+            margin-bottom: 6px;
         }
 
         .main-desc {
             font-size: 0.88rem !important;
             line-height: 1.45;
-            text-align: center !important;
         }
 
         .tag-wrapper {
@@ -645,9 +626,9 @@ if not materi_aktif:
     st.info("Belum ada materi di basis data. Silakan simpan berkas .txt baru di folder database.")
 else:
     label_daftar = (
-        f"📚 SEMBUNYIKAN DAFTAR MATERI\n({total_materi} MATERI TERSEDIA)"
+        f"📚 SEMBUNYIKAN DAFTAR MATERI 📚\n({total_materi} MATERI TERSEDIA)"
         if st.session_state.tampilkan_daftar_materi
-        else f"📚 LIHAT DAFTAR MATERI\n({total_materi} MATERI TERSEDIA)"
+        else f"📚 LIHAT DAFTAR MATERI 📚\n({total_materi} MATERI TERSEDIA)"
     )
 
     if st.button(label_daftar, use_container_width=True, key="toggle_daftar_materi"):
