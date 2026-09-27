@@ -111,17 +111,14 @@ def cari_jawaban_di_database(pertanyaan, daftar_materi):
 
 # ----------------- PERTANYAAN & PANDUAN DINAMIS -----------------
 def buat_pertanyaan_kerap_muncul(daftar_materi):
-    """Membuat pertanyaan yang mengikuti materi di folder database."""
+    """Membuat 3 pertanyaan yang mengikuti materi di folder database."""
     pertanyaan = []
 
-    for materi in daftar_materi[:6]:
+    for materi in daftar_materi[:3]:
         nama = escape(materi["nama"])
-        pertanyaan.extend([
-            f"Apa konsep utama yang perlu dipahami dalam materi {nama}?",
-            f"Bagaimana contoh penerapan konsep pada materi {nama}?",
-        ])
+        pertanyaan.append(f"Apa konsep utama yang perlu dipahami dalam materi {nama}?")
 
-    return pertanyaan[:6]
+    return pertanyaan[:3]
 
 def buat_panduan_bertanya(daftar_materi):
     """Menyusun panduan berdasarkan materi yang tersedia."""
@@ -131,8 +128,9 @@ def buat_panduan_bertanya(daftar_materi):
             "Gunakan pertanyaan yang jelas dan sebutkan topik yang ingin dipelajari."
         ]
 
+    # Mengambil hanya 3 contoh materi
     nama_materi = ", ".join(
-        escape(m["nama"]) for m in daftar_materi[:5]
+        escape(m["nama"]) for m in daftar_materi[:3]
     )
 
     panduan = [
@@ -141,7 +139,7 @@ def buat_panduan_bertanya(daftar_materi):
         "Tambahkan permintaan contoh, perbandingan, langkah analisis, atau rangkuman sesuai kebutuhan.",
     ]
 
-    if len(daftar_materi) > 5:
+    if len(daftar_materi) > 3:
         panduan.append(
             f"Database memuat {len(daftar_materi)} materi; pilih topik yang paling sesuai dari daftar materi."
         )
@@ -165,14 +163,15 @@ def bersihkan_halaman():
     st.session_state.teks_pertanyaan = ""
     st.session_state.jawaban_tutor = None
 
-# ----------------- CSS RESPONSIF (DESKTOP & HP) -----------------
+# ----------------- CSS RESPONSIF & PENGATURAN TATA LETAK -----------------
 st.markdown("""
 <style>
-    /* 1. TAMPILAN DESKTOP / LAPTOP */
+    /* 1. TAMPILAN UMUM & DESKTOP */
     html, body, .stApp, .stApp p, .stApp div, .stApp span, .stApp label,
     .stApp button, .stApp textarea, .stApp input, .stApp h1, .stApp h2,
     .stApp h3, .stApp h4, .stApp li {
         font-family: 'Times New Roman', Times, serif !important;
+        text-align: center;
     }
 
     .stApp {
@@ -190,11 +189,13 @@ st.markdown("""
         max-width: 900px;
         margin: 0 auto;
         padding-bottom: 50px;
+        text-align: center;
     }
 
     .greeting-pill {
         display: inline-flex;
         align-items: center;
+        justify-content: center;
         gap: 8px;
         background: rgba(255, 255, 255, 0.95);
         border: 1px solid #f8bbd0;
@@ -203,7 +204,7 @@ st.markdown("""
         font-size: 0.95rem;
         color: #ad1457;
         font-style: italic;
-        margin-bottom: 15px;
+        margin: 0 auto 15px auto;
         box-shadow: 0 4px 12px rgba(244, 143, 177, 0.2);
     }
 
@@ -214,16 +215,19 @@ st.markdown("""
         border-radius: 24px;
         padding: 24px 30px;
         display: flex;
+        flex-direction: column;
         align-items: center;
-        gap: 25px;
+        justify-content: center;
+        gap: 15px;
         box-shadow: 0 10px 25px rgba(233, 30, 99, 0.08);
         margin-bottom: 25px;
+        text-align: center;
     }
 
     .hero-icon {
         flex-shrink: 0;
-        width: 100px;
-        height: 100px;
+        width: 90px;
+        height: 90px;
     }
 
     .main-title {
@@ -232,6 +236,7 @@ st.markdown("""
         color: #880e4f;
         line-height: 1.15;
         margin: 0 0 8px 0;
+        text-align: center;
     }
 
     .main-desc {
@@ -239,11 +244,13 @@ st.markdown("""
         line-height: 1.55;
         color: #5c3543;
         margin: 0;
+        text-align: center;
     }
 
     .tag-wrapper {
         display: flex;
         flex-wrap: wrap;
+        justify-content: center;
         gap: 8px;
         margin-top: 14px;
     }
@@ -273,12 +280,14 @@ st.markdown("""
         font-weight: bold;
         color: #9c2748;
         margin: 0;
+        text-align: center;
     }
 
     .metric-info {
         font-size: 0.92rem;
         color: #6a3e50;
         margin: 4px 0 0 0;
+        text-align: center;
     }
 
     .section-headline {
@@ -287,39 +296,71 @@ st.markdown("""
         color: #7b113a;
         margin-top: 35px;
         margin-bottom: 4px;
-        text-align: center;
+        text-align: center !important;
     }
 
     .section-subtext {
         font-size: 1rem;
         color: #6a4050;
-        text-align: center;
+        text-align: center !important;
         margin-bottom: 22px;
         font-style: italic;
     }
 
+    /* KARTU UMUM (RATA TENGAH) */
     .card-info {
         background: rgba(255, 255, 255, 0.92);
         border: 1.5px solid #f48fb1;
-        border-left: 6px solid #ad1457;
+        border-top: 5px solid #ad1457;
         border-radius: 16px;
-        padding: 16px 22px;
+        padding: 18px 22px;
         margin-bottom: 14px;
         box-shadow: 0 4px 14px rgba(244, 143, 177, 0.12);
+        text-align: center !important;
     }
 
     .card-info-title {
         font-size: 1.15rem;
         font-weight: bold;
         color: #880e4f;
-        margin-bottom: 4px;
+        margin-bottom: 6px;
+        text-align: center !important;
     }
 
     .card-info-desc {
         font-size: 0.98rem;
         color: #4a2534;
         margin: 0;
-        line-height: 1.5;
+        line-height: 1.6;
+        text-align: center !important;
+    }
+
+    /* KARTU KHUSUS RATA KIRI (PANDUAN & FAQ) */
+    .card-info-left {
+        background: rgba(255, 255, 255, 0.92);
+        border: 1.5px solid #f48fb1;
+        border-top: 5px solid #ad1457;
+        border-radius: 16px;
+        padding: 18px 22px;
+        margin-bottom: 14px;
+        box-shadow: 0 4px 14px rgba(244, 143, 177, 0.12);
+        text-align: left !important;
+    }
+
+    .card-info-left .card-info-title {
+        font-size: 1.15rem;
+        font-weight: bold;
+        color: #880e4f;
+        margin-bottom: 8px;
+        text-align: left !important;
+    }
+
+    .card-info-left .card-info-desc {
+        font-size: 0.98rem;
+        color: #4a2534;
+        margin: 0;
+        line-height: 1.6;
+        text-align: left !important;
     }
 
     .stTextArea textarea {
@@ -329,6 +370,7 @@ st.markdown("""
         padding: 16px !important;
         font-size: 1.05rem !important;
         color: #2b1720 !important;
+        text-align: center !important;
         box-shadow: 0 4px 15px rgba(244, 143, 177, 0.18) !important;
     }
 
@@ -343,6 +385,7 @@ st.markdown("""
         width: 100% !important;
         box-shadow: 0 6px 16px rgba(125, 28, 55, 0.3) !important;
         transition: all 0.25s ease !important;
+        text-align: center !important;
     }
 
     .topic-card {
@@ -356,12 +399,15 @@ st.markdown("""
         margin-bottom: 10px;
         display: flex;
         align-items: center;
+        justify-content: center;
+        text-align: center;
     }
 
     .topic-name {
         font-size: 1.15rem;
         font-weight: bold;
         color: #880e4f;
+        text-align: center;
     }
 
     /* 2. PENYESUAIAN TAMPILAN HP (< 768px) */
@@ -377,8 +423,6 @@ st.markdown("""
         }
 
         .hero-banner {
-            flex-direction: column;
-            text-align: center;
             padding: 16px;
             gap: 12px;
             border-radius: 16px;
@@ -400,7 +444,6 @@ st.markdown("""
         }
 
         .tag-wrapper {
-            justify-content: center;
             gap: 5px;
             margin-top: 10px;
         }
@@ -423,7 +466,6 @@ st.markdown("""
             font-size: 0.78rem !important;
         }
 
-        /* Ukuran judul disesuaikan agar simbol ❧ Pustaka Materi Pembelajaran ☙ pas dalam 1 baris */
         .section-headline {
             font-size: 1.1rem !important;
             margin-top: 22px;
@@ -435,17 +477,17 @@ st.markdown("""
             margin-bottom: 14px;
         }
 
-        .card-info {
+        .card-info, .card-info-left {
             padding: 12px 14px !important;
             border-radius: 12px !important;
             margin-bottom: 10px !important;
         }
 
-        .card-info-title {
+        .card-info-title, .card-info-left .card-info-title {
             font-size: 0.98rem !important;
         }
 
-        .card-info-desc {
+        .card-info-desc, .card-info-left .card-info-desc {
             font-size: 0.85rem !important;
             line-height: 1.4;
         }
@@ -480,7 +522,7 @@ st.markdown('<div class="main-wrapper">', unsafe_allow_html=True)
 # ----------------- 1. HEADER UTAMA -----------------
 st.markdown("""
 <div class="greeting-pill">
-    <span>🌸</span> Selamat Datang • Mari Mengasah Bahasa Bersama Hari Ini ✨
+    <span>🌸</span> Selamat Datang • Mari Mengasah Bahasa Bersama Hari Ini 🌸
 </div>
 """, unsafe_allow_html=True)
 
@@ -581,7 +623,7 @@ else:
 
     if st.session_state.tampilkan_daftar_materi:
         st.markdown(
-            '<p style="color:#6a4050; margin: 10px 0 15px 0; font-style: italic;">'
+            '<p style="color:#6a4050; margin: 10px 0 15px 0; font-style: italic; text-align: center;">'
             'Pilih salah satu materi untuk membuka isi dan contoh pertanyaannya.'
             '</p>',
             unsafe_allow_html=True
@@ -625,7 +667,7 @@ else:
                         st.session_state.jawaban_tutor = ambil_konten(m2["path"])
                         st.rerun()
 
-# ----------------- 4. INFORMASI DINAMIS BERDASARKAN DATABASE -----------------
+# ----------------- 4. INFORMASI DINAMIS (RATA KIRI & TANPA EMOTIKON) -----------------
 pertanyaan_kerap = buat_pertanyaan_kerap_muncul(materi_aktif)
 panduan_bertanya = buat_panduan_bertanya(materi_aktif)
 
@@ -634,23 +676,23 @@ if not faq_html:
     faq_html = "Belum ada pertanyaan yang dapat dibuat. Tambahkan materi ke folder database."
 
 st.markdown(f"""
-<div class="card-info" style="margin-top:20px;">
-    <div class="card-info-title">🔥 Pertanyaan yang Kerap Muncul</div>
+<div class="card-info-left" style="margin-top:20px;">
+    <div class="card-info-title">Pertanyaan yang Kerap Muncul</div>
     <div class="card-info-desc">{faq_html}</div>
 </div>
 """, unsafe_allow_html=True)
 
-panduan_html = "<br>".join(f"✓ {p}" for p in panduan_bertanya)
+panduan_html = "<br>".join(f"• {p}" for p in panduan_bertanya)
 st.markdown(f"""
-<div class="card-info">
-    <div class="card-info-title">✨ Panduan Bertanya Efektif</div>
+<div class="card-info-left">
+    <div class="card-info-title">Panduan Bertanya Efektif</div>
     <div class="card-info-desc">{panduan_html}</div>
 </div>
 """, unsafe_allow_html=True)
 
 # ----------------- 5. FORMULIR TANYA JAWAB UTAMA -----------------
 st.markdown("""
-<div class="card-info" style="margin-top: 20px; border-left-color: #7b113a;">
+<div class="card-info" style="margin-top: 20px; border-top-color: #7b113a;">
     <div class="card-info-title">💬 Ajukan Pertanyaan kepada AI Tutor</div>
     <div class="card-info-desc">
         Tuliskan konsep atau pertanyaan kebahasaan Anda. AI Tutor Naima H akan menelusuri data materi yang bersesuaian.
@@ -681,7 +723,7 @@ with col_aksi2:
 # Kotak Hasil Jawaban / Isi Berkas
 if st.session_state.jawaban_tutor:
     st.markdown("""
-    <div class="card-info" style="background:#fffafc; border-left-color:#2e7d32; margin-top:20px;">
+    <div class="card-info" style="background:#fffafc; border-top-color:#2e7d32; margin-top:20px;">
         <div class="card-info-title" style="color:#2e7d32;">📖 Uraian Materi / Jawaban Tutor Naima H</div>
     </div>
     """, unsafe_allow_html=True)
@@ -690,7 +732,7 @@ if st.session_state.jawaban_tutor:
 # ----------------- 6. PENUTUP -----------------
 st.markdown("""
 <div class="card-info" style="margin-top: 25px; background: #fae4ec; border: 1.5px dashed #ad1457; text-align: center;">
-    <div class="card-info-title">🌱 Terus Asah Kemampuan Bahasa Bersama AI Tutor Naima H 🌸</div>
+    <div class="card-info-title">🌸 Terus Asah Kemampuan Bahasa Bersama AI Tutor Naima H 🌸</div>
     <div class="card-info-desc">
         “Belajar menjadi lebih bermakna ketika setiap materi membuka ruang untuk bertanya, memahami, dan berkembang.”
     </div>
