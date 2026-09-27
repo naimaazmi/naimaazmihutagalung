@@ -76,7 +76,6 @@ def cari_jawaban_di_database(pertanyaan, daftar_materi):
 
     pertanyaan_lower = pertanyaan.lower()
     
-    # Filter kata umum (stop words) agar fokus pada kata kunci inti
     stop_words = {"adalah", "yang", "dan", "atau", "dari", "pada", "untuk", "dengan", "apa", "itu", "bagaimana", "mengapa"}
     kata_kunci_list = [k for k in pertanyaan_lower.split() if len(k) > 2 and k not in stop_words]
 
@@ -93,18 +92,16 @@ def cari_jawaban_di_database(pertanyaan, daftar_materi):
         skor = 0
         for kata in kata_kunci_list:
             if kata in nama_materi:
-                skor += 5  # Bobot lebih besar jika kata kunci cocok dengan judul materi
+                skor += 5
             if kata in konten_lower:
                 skor += 1
 
         if skor > 0:
             materi_terkait.append((skor, materi["nama"], konten))
 
-    # Urutkan dari skor tertinggi
     materi_terkait.sort(key=lambda x: x[0], reverse=True)
 
     if materi_terkait:
-        # Mengambil HANYA 1 materi dengan skor tertinggi
         materi_terbaik = materi_terkait[0]
         return f"📌 **Materi Terkait: {materi_terbaik[1]}**\n\n{materi_terbaik[2]}"
     else:
@@ -171,7 +168,7 @@ def bersihkan_halaman():
 # ----------------- CSS RESPONSIF (DESKTOP & HP) -----------------
 st.markdown("""
 <style>
-    /* 1. TAMPILAN UMUM (DESKTOP / LAPTOP) */
+    /* 1. TAMPILAN DESKTOP / LAPTOP */
     html, body, .stApp, .stApp p, .stApp div, .stApp span, .stApp label,
     .stApp button, .stApp textarea, .stApp input, .stApp h1, .stApp h2,
     .stApp h3, .stApp h4, .stApp li {
@@ -367,7 +364,7 @@ st.markdown("""
         color: #880e4f;
     }
 
-    /* 2. PENYESUAIAN KHUSUS UNTUK HP (PERANGKAT SELULER < 768px) */
+    /* 2. PENYESUAIAN TAMPILAN HP (< 768px) */
     @media (max-width: 768px) {
         .main-wrapper {
             padding-bottom: 25px;
@@ -426,9 +423,11 @@ st.markdown("""
             font-size: 0.78rem !important;
         }
 
+        /* Ukuran judul disesuaikan agar simbol ❧ Pustaka Materi Pembelajaran ☙ pas dalam 1 baris */
         .section-headline {
-            font-size: 1.3rem !important;
+            font-size: 1.1rem !important;
             margin-top: 22px;
+            white-space: nowrap;
         }
 
         .section-subtext {
