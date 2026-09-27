@@ -128,7 +128,6 @@ def buat_panduan_bertanya(daftar_materi):
             "Gunakan pertanyaan yang jelas dan sebutkan topik yang ingin dipelajari."
         ]
 
-    # Mengambil hanya 3 contoh materi
     nama_materi = ", ".join(
         escape(m["nama"]) for m in daftar_materi[:3]
     )
@@ -201,11 +200,13 @@ st.markdown("""
         border: 1px solid #f8bbd0;
         padding: 6px 20px;
         border-radius: 25px;
-        font-size: 0.95rem;
+        font-size: 0.92rem;
         color: #ad1457;
         font-style: italic;
         margin: 0 auto 15px auto;
         box-shadow: 0 4px 12px rgba(244, 143, 177, 0.2);
+        white-space: nowrap;
+        max-width: 100%;
     }
 
     .hero-banner {
@@ -307,7 +308,6 @@ st.markdown("""
         font-style: italic;
     }
 
-    /* KARTU UMUM (RATA TENGAH) */
     .card-info {
         background: rgba(255, 255, 255, 0.92);
         border: 1.5px solid #f48fb1;
@@ -335,7 +335,6 @@ st.markdown("""
         text-align: center !important;
     }
 
-    /* KARTU KHUSUS RATA KIRI (PANDUAN & FAQ) */
     .card-info-left {
         background: rgba(255, 255, 255, 0.92);
         border: 1.5px solid #f48fb1;
@@ -374,18 +373,23 @@ st.markdown("""
         box-shadow: 0 4px 15px rgba(244, 143, 177, 0.18) !important;
     }
 
+    /* CSS TOMBOL: RATA TENGAH & HURUF KAPITAL SEMUA */
     div.stButton > button {
         background: linear-gradient(135deg, #a63a58 0%, #7d1c37 100%) !important;
         color: #ffffff !important;
-        font-size: 1.05rem !important;
+        font-size: 1rem !important;
         font-weight: bold !important;
         border: none !important;
         border-radius: 30px !important;
-        padding: 10px 22px !important;
+        padding: 10px 20px !important;
         width: 100% !important;
         box-shadow: 0 6px 16px rgba(125, 28, 55, 0.3) !important;
         transition: all 0.25s ease !important;
         text-align: center !important;
+        text-transform: uppercase !important; /* Memaksa huruf kapital semua */
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
     }
 
     .topic-card {
@@ -417,8 +421,9 @@ st.markdown("""
         }
 
         .greeting-pill {
-            font-size: 0.8rem;
-            padding: 4px 14px;
+            font-size: 0.72rem !important;
+            padding: 4px 12px !important;
+            gap: 4px !important;
             margin-bottom: 10px;
         }
 
@@ -499,8 +504,8 @@ st.markdown("""
         }
 
         div.stButton > button {
-            font-size: 0.92rem !important;
-            padding: 8px 14px !important;
+            font-size: 0.85rem !important;
+            padding: 8px 12px !important;
             border-radius: 20px !important;
         }
 
@@ -522,7 +527,7 @@ st.markdown('<div class="main-wrapper">', unsafe_allow_html=True)
 # ----------------- 1. HEADER UTAMA -----------------
 st.markdown("""
 <div class="greeting-pill">
-    <span>🌸</span> Selamat Datang • Mari Mengasah Bahasa Bersama Hari Ini 🌸
+    🌸 Selamat Datang • Mari Mengasah Bahasa Bersama Hari Ini 🌸
 </div>
 """, unsafe_allow_html=True)
 
@@ -667,7 +672,7 @@ else:
                         st.session_state.jawaban_tutor = ambil_konten(m2["path"])
                         st.rerun()
 
-# ----------------- 4. INFORMASI DINAMIS (RATA KIRI & TANPA EMOTIKON) -----------------
+# ----------------- 4. INFORMASI DINAMIS -----------------
 pertanyaan_kerap = buat_pertanyaan_kerap_muncul(materi_aktif)
 panduan_bertanya = buat_panduan_bertanya(materi_aktif)
 
@@ -708,9 +713,11 @@ pertanyaan_user = st.text_area(
     label_visibility="collapsed"
 )
 
-col_aksi1, col_aksi2 = st.columns([3, 1])
+# TATA LETAK TOMBOL RATA TENGAH (MENGGUNAKAN KOLOM PENYEIMBANG KIRI & KANAN)
+_, col_aksi1, col_aksi2, _ = st.columns([0.5, 2.5, 2.5, 0.5])
+
 with col_aksi1:
-    if st.button("➤ AJUKAN SEKARANG"):
+    if st.button("➤ AJUKAN SEKARANG", use_container_width=True):
         if st.session_state.teks_pertanyaan.strip():
             with st.spinner("🌸 AI Tutor Naima H sedang menelaah basis data materi Anda..."):
                 st.session_state.jawaban_tutor = cari_jawaban_di_database(st.session_state.teks_pertanyaan, materi_aktif)
@@ -718,7 +725,7 @@ with col_aksi1:
             st.warning("Silakan tuliskan pertanyaan terlebih dahulu ya! 💕")
 
 with col_aksi2:
-    st.button("🔄 Bersihkan", on_click=bersihkan_halaman)
+    st.button("🔄 BERSIHKAN", on_click=bersihkan_halaman, use_container_width=True)
 
 # Kotak Hasil Jawaban / Isi Berkas
 if st.session_state.jawaban_tutor:
