@@ -165,9 +165,9 @@ def bersihkan_halaman():
 # ----------------- CSS RESPONSIF & PENGATURAN TATA LETAK -----------------
 st.markdown("""
 <style>
-    /* MEMOTONG RUANG KOSONG DI BAHAGIAN ATAS (BULATAN HIJAU) */
+    /* MEMBERIKAN JARAK AMAN DARI HEADER ATAS */
     .block-container {
-        padding-top: 1rem !important;
+        padding-top: 3.5rem !important;
         padding-bottom: 2rem !important;
     }
 
@@ -379,7 +379,6 @@ st.markdown("""
         box-shadow: 0 4px 15px rgba(244, 143, 177, 0.18) !important;
     }
 
-    /* CSS BUTANG: MEMBENARKAN TEKS TURUN BARIS DENGAN \n */
     div.stButton > button {
         background: linear-gradient(135deg, #a63a58 0%, #7d1c37 100%) !important;
         color: #ffffff !important;
@@ -393,7 +392,7 @@ st.markdown("""
         transition: all 0.25s ease !important;
         text-align: center !important;
         text-transform: uppercase !important;
-        white-space: pre-line !important; /* Membenarkan garisan baharu (\n) */
+        white-space: pre-line !important;
         line-height: 1.35 !important;
         display: flex !important;
         justify-content: center !important;
@@ -425,7 +424,7 @@ st.markdown("""
     /* 2. PENYESUAIAN TAMPILAN HP (< 768px) */
     @media (max-width: 768px) {
         .block-container {
-            padding-top: 0.5rem !important;
+            padding-top: 3rem !important; /* Jarak aman dari header di HP */
         }
 
         .main-wrapper {
@@ -436,7 +435,7 @@ st.markdown("""
             font-size: 0.72rem !important;
             padding: 4px 12px !important;
             gap: 4px !important;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
         .hero-banner {
@@ -537,9 +536,6 @@ st.markdown("""
 st.markdown('<div class="main-wrapper">', unsafe_allow_html=True)
 
 # ----------------- 1. HEADER UTAMA -----------------
-
-
-
 st.markdown("""
 <div class="greeting-pill">
     🌸 Selamat Datang • Mari Mengasah Bahasa Bersama Hari Ini 🌸
@@ -629,7 +625,6 @@ st.markdown(
 if not materi_aktif:
     st.info("Belum ada materi di basis data. Silakan simpan berkas .txt baru di folder database.")
 else:
-    # MENAMBAH \n SUPAYA TEKS "(50 MATERI TERSEDIA)" AUTOMATIK TURUN KE BARIS BUKAN DI PAPARAN HP
     label_daftar = (
         f"📚 SEMBUNYIKAN DAFTAR MATERI 📚\n({total_materi} MATERI TERSEDIA)"
         if st.session_state.tampilkan_daftar_materi
