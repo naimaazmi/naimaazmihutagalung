@@ -645,9 +645,9 @@ if not materi_aktif:
     st.info("Belum ada materi di basis data. Silakan simpan berkas .txt baru di folder database.")
 else:
     label_daftar = (
-        f"📚 SEMBUNYIKAN DAFTAR MATERI 📚\n({total_materi} MATERI TERSEDIA)"
+        f"📚 SEMBUNYIKAN DAFTAR MATERI\n({total_materi} MATERI TERSEDIA)"
         if st.session_state.tampilkan_daftar_materi
-        else f"📚 LIHAT DAFTAR MATERI 📚\n({total_materi} MATERI TERSEDIA)"
+        else f"📚 LIHAT DAFTAR MATERI\n({total_materi} MATERI TERSEDIA)"
     )
 
     if st.button(label_daftar, use_container_width=True, key="toggle_daftar_materi"):
