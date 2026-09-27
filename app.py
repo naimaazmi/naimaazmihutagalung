@@ -576,7 +576,7 @@ st.markdown(f"""
         </svg>
     </div>
     <div>
-        <h1 class="main-title">AI Tutor Bahasa Indonesia Naima Htg</h1>
+        <h1 class="main-title">AI Tutor Bahasa Indonesia Naima H</h1>
         <p class="main-desc">
             Mendalami seluk-beluk kaidah Bahasa Indonesia kini terasa lebih ringan, terstruktur, serta komunikatif. 
             Terhubung otomatis dengan seluruh arsip kebahasaan Anda yang tersimpan di dalam basis data.
