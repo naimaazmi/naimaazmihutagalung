@@ -165,6 +165,12 @@ def bersihkan_halaman():
 # ----------------- CSS RESPONSIF & PENGATURAN TATA LETAK -----------------
 st.markdown("""
 <style>
+    /* MEMOTONG RUANG KOSONG DI BAHAGIAN ATAS (BULATAN HIJAU) */
+    .block-container {
+        padding-top: 1rem !important;
+        padding-bottom: 2rem !important;
+    }
+
     /* 1. TAMPILAN UMUM & DESKTOP */
     html, body, .stApp, .stApp p, .stApp div, .stApp span, .stApp label,
     .stApp button, .stApp textarea, .stApp input, .stApp h1, .stApp h2,
@@ -373,7 +379,7 @@ st.markdown("""
         box-shadow: 0 4px 15px rgba(244, 143, 177, 0.18) !important;
     }
 
-    /* CSS TOMBOL: RATA TENGAH & HURUF KAPITAL SEMUA */
+    /* CSS BUTANG: MEMBENARKAN TEKS TURUN BARIS DENGAN \n */
     div.stButton > button {
         background: linear-gradient(135deg, #a63a58 0%, #7d1c37 100%) !important;
         color: #ffffff !important;
@@ -386,7 +392,9 @@ st.markdown("""
         box-shadow: 0 6px 16px rgba(125, 28, 55, 0.3) !important;
         transition: all 0.25s ease !important;
         text-align: center !important;
-        text-transform: uppercase !important; /* Memaksa huruf kapital semua */
+        text-transform: uppercase !important;
+        white-space: pre-line !important; /* Membenarkan garisan baharu (\n) */
+        line-height: 1.35 !important;
         display: flex !important;
         justify-content: center !important;
         align-items: center !important;
@@ -416,6 +424,10 @@ st.markdown("""
 
     /* 2. PENYESUAIAN TAMPILAN HP (< 768px) */
     @media (max-width: 768px) {
+        .block-container {
+            padding-top: 0.5rem !important;
+        }
+
         .main-wrapper {
             padding-bottom: 25px;
         }
@@ -614,10 +626,11 @@ st.markdown(
 if not materi_aktif:
     st.info("Belum ada materi di basis data. Silakan simpan berkas .txt baru di folder database.")
 else:
+    # MENAMBAH \n SUPAYA TEKS "(50 MATERI TERSEDIA)" AUTOMATIK TURUN KE BARIS BUKAN DI PAPARAN HP
     label_daftar = (
-        f"📚 Sembunyikan Daftar Materi ({total_materi} materi tersedia)"
+        f"📚 SEMBUNYIKAN DAFTAR MATERI 📚\n({total_materi} MATERI TERSEDIA)"
         if st.session_state.tampilkan_daftar_materi
-        else f"📚 Lihat Daftar Materi ({total_materi} materi tersedia)"
+        else f"📚 LIHAT DAFTAR MATERI 📚\n({total_materi} MATERI TERSEDIA)"
     )
 
     if st.button(label_daftar, use_container_width=True, key="toggle_daftar_materi"):
@@ -713,7 +726,7 @@ pertanyaan_user = st.text_area(
     label_visibility="collapsed"
 )
 
-# TATA LETAK TOMBOL RATA TENGAH (MENGGUNAKAN KOLOM PENYEIMBANG KIRI & KANAN)
+# TATA LETAK TOMBOL RATA TENGAH
 _, col_aksi1, col_aksi2, _ = st.columns([0.5, 2.5, 2.5, 0.5])
 
 with col_aksi1:
